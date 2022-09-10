@@ -1,16 +1,21 @@
 const express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
+const bodyParser = require("body-parser");
 
 const app = express();
-// const bodyParser = require("body-parser");
 
-const port = 1337;
+const port = process.env.PORT || 1337;
 
+const documents = require('./routes/documents');
 const index = require('./routes/index');
-const hello = require('./routes/hello');
 
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cors());
+app.options('*', cors());
+app.use(express.json());
+
 
 // don't show the log when it is test
 if (process.env.NODE_ENV !== 'test') {
@@ -18,18 +23,20 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
 
+
+app.use('/docs', documents);
+app.use('/', index);
+
+
 app.use((req, res, next) => {
     console.log(req.method);
     console.log(req.path);
     next();
 });
 
-// app.use(bodyParser.json()); // for parsing application/json
-// app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use('/', index);
-app.use('/hello', hello);
-
+// Start up server
+app.listen(port, () => console.log(`Example API listening on port ${port}!`));
 
 
 // Add routes for 404 and error handling
@@ -57,5 +64,3 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start up server
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));

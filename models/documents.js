@@ -1,5 +1,4 @@
 const database = require("../db/database.js");
-// const initDocuments = require("../data/documents.json");
 
 const documents = {
     getAllDocuments: async function getAllDocuments() {
@@ -9,7 +8,7 @@ const documents = {
             db = await database.getDb();
 
             const allDocuments = await db.collection.find().toArray();
-
+ 
             return allDocuments
         } catch (error) {
             return {
@@ -20,7 +19,25 @@ const documents = {
         } finally {
             await db.client.close();
         }
-    }
-}
+    },
+    insertDoc: async function insertDoc(newDoc) {
+        let db;
 
-export default documents;
+        try {
+            db = await database.getDb();
+
+            const result = await db.collection.insertOne(newDoc);
+
+            return {
+                ...newDoc,
+                _id: result.insertedId,
+            }
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
+    }
+};
+
+module.exports = documents;
