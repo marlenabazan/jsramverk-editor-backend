@@ -18,4 +18,21 @@ router.post("/", async (req, res) => {
     return res.status(201).json({ data: result });
 });
 
+router.put("/", async (req, res) => {
+    const docToUpdate = req.body.title;
+    const newText = req.body.text;
+    console.log(req.body.title);
+    console.log(req.body.text);
+    const result = await docsModel.updateDoc(docToUpdate, newText);
+
+    return res.status(201).json({ data: result });
+});
+
+router.delete("/", async (req, res) => {
+    const result = await docsModel.removeDocs();
+
+    return res.status(204).json();
+    }
+)
+
 module.exports = router;

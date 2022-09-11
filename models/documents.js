@@ -37,6 +37,44 @@ const documents = {
         } finally {
             await db.client.close();
         }
+    },
+    updateDoc: async function updateDoc(docToUpdate, newText) {
+        let db;
+
+        try {
+            db = await database.getDb();
+
+            await db.collection.updateOne({ title: docToUpdate }, 
+                { 
+                    $set: {
+                        text: newText 
+                    }
+                });
+
+            const result = await db.collection.find({ title: docToUpdate }).toArray();
+
+            return {
+                result
+            }
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
+    },
+    removeDocs: async function removeDocs() {
+        let db;
+
+        try {
+            db = await database.getDb();
+
+            const result = await db.collection.deleteMany({});
+
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
     }
 };
 
