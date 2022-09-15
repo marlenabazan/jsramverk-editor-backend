@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const mongo = require("mongodb").MongoClient;
-// const config = require("./config.json");
 const collectionName = "documents";
 
 const database = {

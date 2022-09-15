@@ -35,4 +35,13 @@ router.delete("/", async (req, res) => {
     }
 )
 
+router.get("/:id", async (req, res) => {
+    const docToGet = req.params.id;
+    const oneDocument =  await docsModel.getOneDocument(docToGet);
+
+    return res.json({
+        data: oneDocument
+    });
+});
+
 module.exports = router;

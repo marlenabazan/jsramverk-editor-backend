@@ -1,4 +1,5 @@
 const database = require("../db/database.js");
+const ObjectId = require('mongodb').ObjectId; 
 
 const documents = {
     getAllDocuments: async function getAllDocuments() {
@@ -10,6 +11,25 @@ const documents = {
             const allDocuments = await db.collection.find().toArray();
  
             return allDocuments
+        } catch (error) {
+            return {
+                errors: {
+                    message: error.message,
+                }
+            };
+        } finally {
+            await db.client.close();
+        }
+    },
+    getOneDocument: async function getOneDocument(docToGet) {
+        let db;
+
+        try {
+            db = await database.getDb();
+
+            const oneDocument = await db.collection.findOne({ _id: ObjectId(docToGet) });
+ 
+            return oneDocument
         } catch (error) {
             return {
                 errors: {
