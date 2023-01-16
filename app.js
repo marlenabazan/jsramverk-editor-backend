@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 
 
 // Start up server
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+// app.listen(port, () => console.log(`Example API listening on port ${port}!`));
 
 
 // Add routes for 404 and error handling
@@ -65,3 +65,6 @@ app.use((err, req, res, next) => {
     });
 });
 
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+module.exports = server;
