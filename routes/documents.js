@@ -20,11 +20,9 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     const docToUpdateId = req.body._id;
-    const docToUpdateTitle = req.body.title;
     const newText = req.body.text;
-    console.log(req.body.title);
-    console.log(req.body.text);
-    const result = await docsModel.updateDoc(docToUpdateId, docToUpdateTitle, newText);
+    // console.log(req.body.text);
+    const result = await docsModel.updateDoc(docToUpdateId, newText);
 
     return res.status(201).json({ data: result });
 });

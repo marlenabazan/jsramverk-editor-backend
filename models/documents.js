@@ -59,20 +59,20 @@ const documents = {
             await db.client.close();
         }
     },
-    updateDoc: async function updateDoc(docToUpdate, newText) {
+    updateDoc: async function updateDoc(docToUpdateId, newText) {
         let db;
 
         try {
             db = await database.getDb(collectionName);
 
-            await db.collection.updateOne({ title: docToUpdate }, 
+            await db.collection.updateOne({ id: docToUpdateId }, 
                 { 
                     $set: {
                         text: newText 
                     }
                 });
 
-            const result = await db.collection.find({ title: docToUpdate }).toArray();
+            const result = await db.collection.find({ id: docToUpdateId }).toArray();
 
             return {
                 result
