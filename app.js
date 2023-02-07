@@ -11,6 +11,7 @@ const port = process.env.PORT || 1337;
 
 const documents = require('./routes/documents');
 const index = require('./routes/index');
+const auth = require('./routes/auth');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 
 app.use('/docs', documents);
+app.use('/auth', auth);
 app.use('/', index);
 
 const io = require("socket.io")(httpServer, {

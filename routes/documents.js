@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const docsModel = require("../models/documents");
+const authModel = require("../models/auth");
 
-router.get("/", async (req, res) => {
-    const docs =  await docsModel.getAllDocuments();
+router.get("/",
+    (req, res, next) => authModel.checkToken(req, res, next),
+    async (req, res) => {
+        const docs =  await docsModel.getAllDocuments();
 
-    return res.json({
-        data: docs
-    });
+        return res.json({
+            data: docs
+        });
 });
 
 router.post("/", async (req, res) => {
