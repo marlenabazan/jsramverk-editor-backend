@@ -84,6 +84,30 @@ const documents = {
             await db.client.close();
         }
     },
+    shareDoc: async function updateDoc(docToShare, userToShare) {
+        let db;
+
+        try {
+            db = await database.getDb(collectionName);
+
+            await db.collection.updateOne({ _id: ObjectId(docToShare) }, 
+                { 
+                    $push: {
+                        shared: userToShare
+                    }
+                });
+
+            const result = await db.collection.findOne({ _id: ObjectId(docToShare) });
+
+            return {
+                result
+            }
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
+    },
     removeDocs: async function removeDocs() {
         let db;
 

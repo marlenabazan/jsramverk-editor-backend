@@ -31,6 +31,14 @@ router.put("/update", async (req, res) => {
     return res.status(200).json({ data: result });
 });
 
+router.put("/share", async (req, res) => {
+    const docToShare = req.body._id;
+    const userToShare = req.body.user;
+    const result = await docsModel.shareDoc(docToShare, userToShare);
+
+    return res.status(200).json({ data: result });
+});
+
 router.delete("/", async (req, res) => {
     const result = await docsModel.removeDocs();
 
