@@ -21,13 +21,14 @@ router.post("/", async (req, res) => {
     return res.status(201).json({ data: result });
 });
 
-router.put("/", async (req, res) => {
+router.put("/update", async (req, res) => {
+    console.log("put route");
     const docToUpdateId = req.body._id;
     const newText = req.body.text;
     // console.log(req.body.text);
     const result = await docsModel.updateDoc(docToUpdateId, newText);
 
-    return res.status(201).json({ data: result });
+    return res.status(200).json({ data: result });
 });
 
 router.delete("/", async (req, res) => {

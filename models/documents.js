@@ -60,19 +60,20 @@ const documents = {
         }
     },
     updateDoc: async function updateDoc(docToUpdateId, newText) {
+        console.log("update start");
         let db;
 
         try {
             db = await database.getDb(collectionName);
 
-            await db.collection.updateOne({ id: docToUpdateId }, 
+            await db.collection.updateOne({ _id: ObjectId(docToUpdateId) }, 
                 { 
                     $set: {
                         text: newText 
                     }
                 });
 
-            const result = await db.collection.find({ id: docToUpdateId }).toArray();
+            const result = await db.collection.findOne({ _id: ObjectId(docToUpdateId) });
 
             return {
                 result
