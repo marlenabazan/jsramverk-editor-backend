@@ -4,6 +4,14 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 
+const visual = false;
+const { graphqlHTTP } = require('express-graphql');
+const {
+    GraphQLSchema
+} = require('graphql');
+
+const RootQueryType = require('./graphql/root.js');
+
 const app = express();
 const httpServer = require("http").createServer(app);
 
@@ -26,6 +34,14 @@ if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
 
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
+
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual, // Visual är satt till true under utveckling
+}));
 
 app.use('/docs', documents);
 app.use('/auth', auth);
