@@ -20,6 +20,7 @@ const port = process.env.PORT || 1337;
 const documents = require('./routes/documents');
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const invite = require('./routes/invite');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -45,6 +46,7 @@ app.use('/graphql', graphqlHTTP({
 
 app.use('/docs', documents);
 app.use('/auth', auth);
+app.use('/invite', invite);
 app.use('/', index);
 
 const io = require("socket.io")(httpServer, {
