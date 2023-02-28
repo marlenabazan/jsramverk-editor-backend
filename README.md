@@ -25,7 +25,17 @@ ATLAS_PASSWORD="YOUR_PASSWORD"
 `npm run watch` = nodemon app.js
 
 # Routes
-Most routes have url `"/"`. <br />
-You can create, update and get all documents there.
+`"/docs"` gets and creates documents.
 
-Route `"/:id"` shows one chosen document. 
+`"/docs/:id"` shows one chosen document.
+
+`"/docs/update"` updates one document.
+
+`"/docs/share"` shares a document with somebody.
+
+`"/auth/register"` is used to register.
+
+`"/auth/login"` is used to log in.
+
+`"/invite"` sends an invite to a document.
+
